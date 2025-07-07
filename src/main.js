@@ -1,24 +1,35 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+const bouton = document.getElementById("chercher");
+const resultat = document.getElementById("resultat");
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+bouton.addEventListener("click", () => {
+  const ville = document.getElementById("ville").value.trim();
+  if (ville === "") return;
 
-setupCounter(document.querySelector('#counter'))
+  const cle = "3c271bbb23f824063a783ea95c8f9983"; // Remplace par ta vraie clé OpenWeatherMap
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=${cle}&units=metric&lang=fr`;
+
+  fetch(url)
+    .then(response => {
+      if (!response.ok) throw new Error("Ville non trouvée");
+      console.log(response);
+      return response.json();
+    })
+    .then(data => {
+      const nom = data.name;
+      const temp = data.main.temp;
+      const desc = data.weather[0].description;
+      const icon = data.weather[0].icon;
+      const iconURL = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+
+      resultat.innerHTML = `
+        <h2>${nom}</h2>
+        <p>🌡️ Température : ${temp} °C</p>
+        <p>🌥️ ${desc}</p>
+        <img src="${iconURL}"alt="météo">
+      `;
+    })
+    .catch(error => {
+      resultat.innerHTML = `<p style="color:red;">❌ ${error.message}</p>`;
+    });
+});
