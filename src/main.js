@@ -29,23 +29,28 @@ bouton.addEventListener("click", () => {
       const lat = data.coord.lat;
       const lon = data.coord.lon;
 
-      const timezoneUrl = `https://api.bigdatacloud.net/data/timezone-by-location?latitude=${lat}&longitude=${lon}&key=YOUR_BIGDATA_API_KEY`;
+      const timezoneUrl = `https://api.bigdatacloud.net/data/timezone-by-location?latitude=${lat}&longitude=${lon}&key=bdc_fdf440bfbdd84eb2b1bd7d03a5c912b0`;
 
       fetch(timezoneUrl)
         .then(res => res.json())
         .then(timezoneData => {
-          const zone = timezoneData.timezone;
+          const zone = timezoneData.ianaTimeId;
           const heureLocale = DateTime.now().setZone(zone).toFormat("HH:mm");
 
        resultat.innerHTML = `
-        <h2>${nom}</h2>
-        <p>🌡️ Température : ${temp} °C</p>
-        <p> 💧Humidité: ${humidite}</p>
-        <p> Pression: ${pression} Pa</p>
-        <p>${desc}</p>
-        <img src="${iconURL}" alt="météo">
-        <p>🕒 Heure locale : ${heureLocale}</p>
-        `;
+      <h2>${nom}</h2>
+      <p>🌡️ Température : ${temp} °C</p>
+      <p>💧 Humidité : ${humidite}%</p>
+      <p>Pression : ${pression} hPa</p>
+      <p>☁️ ${desc}</p>
+      <img src="${iconURL}" alt="météo">
+    <p>🕒 Heure locale : ${heureLocale}</p>
+  `;
+
+    // 🔁 Réinitialiser l’animation à chaque fois
+      resultat.style.animation = 'none';
+      void resultat.offsetWidth; // force reflow
+      resultat.style.animation = 'fadeIn 0.8s ease forwards';
     })
     .catch(error => {
       resultat.innerHTML = `<p style="color:red;">❌ ${error.message}</p>`;

@@ -50,9 +50,9 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  background: linear-gradient(to right, #f1271179, #e0d4ba);
 }
 input{
   border-radius: 8px;
@@ -63,6 +63,7 @@ input{
   font-family: inherit;
   transition: border-color 0.25s;
   text-align: center;
+  background-color: #c7ccad73;
 
 }
 button:hover {
@@ -80,14 +81,50 @@ section{
 
 #resultat {
   margin-top: 20px;
+  margin-left: 15px;
+  margin-bottom: 15px;
   font-size: 1.2rem;
   color: #213547;
+  background-color: rgba(24, 13, 227, 0.114);
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.8s ease forwards;
+  opacity: 0; /* animation initiale */
+  transform: translateY(20px); /* animation initiale */
+  transition: all 0.3s ease-in-out;
 }
+
+#resultat h2 {
+  color: #2b4371;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+#resultat p {
+  margin: 0.5rem 0;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+#resultat img {
+  width: 100px;
+  margin-top: 1rem;
+}
+
+/* ✨ Animation fadeIn */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #68aeebc8;
+    background:linear-gradient(to right, rgb(95, 95, 235),rgb(202, 156, 207),rgb(127, 199, 236));
   }
   button {
     background-color: #f9f9f9;
